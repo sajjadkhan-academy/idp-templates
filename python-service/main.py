@@ -1,19 +1,52 @@
 from fastapi import FastAPI
-from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 
-app = FastAPI(title="Python Service", version="1.0.0")
+app = FastAPI(
+    title="Python Microservice",
+    description="A FastAPI microservice created from IDP template",
+    version="1.0.0"
+)
+
+# Configure CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.get("/")
 async def root():
-    """Root endpoint that returns a hello world message."""
-    return {"message": "Hello World!"}
+    """
+    Root endpoint - returns a simple hello world message.
+    """
+    return {"message": "Hello World", "status": "healthy"}
 
 
 @app.get("/health")
 async def health_check():
-    """Health check endpoint."""
-    return {"status": "healthy"}
+    """
+    Health check endpoint for monitoring.
+    """
+    return {
+        "status": "healthy",
+        "service": "python-microservice",
+        "version": "1.0.0"
+    }
+
+
+@app.get("/api/v1/status")
+async def api_status():
+    """
+    API status endpoint.
+    """
+    return {
+        "api": "v1",
+        "status": "operational",
+        "version": "1.0.0"
+    }
 
 
 if __name__ == "__main__":
