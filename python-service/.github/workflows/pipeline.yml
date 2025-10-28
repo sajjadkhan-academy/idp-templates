@@ -35,9 +35,10 @@ jobs:
           context: .
           file: ./Dockerfile 
           push: true
-          tags: ghcr.io/${{ github.repository }}/python-service:latest
+          tags: ghcr.io/${{ github.actor }}/${{ github.event.repository.name }}:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: Image digest
-        run: echo ${{ steps.build.outputs.digest }}
+      - name: Image info
+        run: |
+          echo "Built and pushed: ghcr.io/${{ github.actor }}/${{ github.event.repository.name }}:latest"
