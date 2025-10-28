@@ -60,14 +60,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Run GitGuardian Secret Scanning
-        uses: GitGuardian/ggshield-action@master
-        env:
-          GITGUARDIAN_API_KEY: ${{ secrets.GITGUARDIAN_API_KEY }}
-        with:
-          arguments: "scan --json -o gg-report.json"
-          all: true
-
       - name: Run TruffleHog Secret Scanning
         uses: trufflesecurity/trufflehog@main
         with:
